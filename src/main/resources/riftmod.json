@@ -1,0 +1,11 @@
+{
+  "id": "capabilities",
+  "name": "Capabilities",
+  "authors": [
+    "ZenDarva"
+  ],
+  "listeners": [
+    "com.gmail.zendarva.capabilities.MixinListener",
+    "com.gmail.zendarva.capabilities.Capabilities"
+  ]
+}
