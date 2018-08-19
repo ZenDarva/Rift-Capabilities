@@ -1,7 +1,9 @@
 package com.gmail.zendarva.capabilities.mixins;
 
+import com.gmail.zendarva.capabilities.API.ICapability;
 import com.gmail.zendarva.capabilities.API.ICapabilityProvider;
 import com.gmail.zendarva.capabilities.items.IItemHandler;
+import com.gmail.zendarva.capabilities.items.VanillaInventoryWrapper;
 import net.minecraft.block.BlockHopper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.IInventory;
@@ -17,8 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static net.minecraft.tileentity.TileEntityHopper.func_195484_a;
 
 @Mixin(TileEntityHopper.class)
-public abstract class HopperMixin extends TileEntityLockableLoot {
-
+public abstract class HopperMixin extends TileEntityLockableLoot implements ICapabilityProvider {
+    VanillaInventoryWrapper wrapper = new VanillaInventoryWrapper((IInventory) (Object)this);
 
     //Really?  That's stupid.
     protected HopperMixin(TileEntityType<?> p_i48284_1_) {
@@ -41,9 +43,6 @@ public abstract class HopperMixin extends TileEntityLockableLoot {
         IInventory inventory = getSidedInventory(world,direction.getOpposite(),this.pos.offset(direction));
         if (inventory == null) {//Maybe a vanilla inventory?
             inventory = func_195484_a(world, this.pos.offset(direction));
-            if (inventory !=null) {
-                System.out.println("Vanilla inventory of type: " + inventory.getClass());
-            }
         }
         ci.setReturnValue(inventory);
     }
@@ -57,6 +56,22 @@ public abstract class HopperMixin extends TileEntityLockableLoot {
                     return (IInventory) ((ICapabilityProvider) entity).getCapability(direction, IItemHandler.class);
                 }
             }
+        }
+        return null;
+    }
+
+
+    @Override
+    public boolean hasCapability(EnumFacing direction, Class<? extends ICapability> capability) {
+        if (capability == IItemHandler.class)
+            return true;
+        return false;
+    }
+
+    @Override
+    public ICapability getCapability(EnumFacing direction, Class<? extends ICapability> capability) {
+        if (capability == IItemHandler.class){
+            return wrapper;
         }
         return null;
     }
