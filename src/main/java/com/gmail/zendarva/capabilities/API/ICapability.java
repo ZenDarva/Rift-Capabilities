@@ -8,4 +8,5 @@ public interface ICapability {
     //You are responsible for saving/loading your own capabilities.
     public void readFromNBT(NBTTagCompound tag);
     public void writeToNBT(NBTTagCompound tag);
+    public boolean matches(ICapabilityContext context);
 }

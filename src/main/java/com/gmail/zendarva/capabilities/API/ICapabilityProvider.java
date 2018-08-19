@@ -2,9 +2,9 @@ package com.gmail.zendarva.capabilities.API;
 
 import net.minecraft.util.EnumFacing;
 
+import java.util.Optional;
+
 public interface ICapabilityProvider {
 
-    public boolean hasCapability(EnumFacing direction, Class<? extends ICapability> capability);
-    public ICapability getCapability(EnumFacing direction, Class<? extends ICapability> capability);
-
+    public Optional<? extends ICapability> getCapability(ICapabilityContext context, Class<? extends ICapability> capability);
 }

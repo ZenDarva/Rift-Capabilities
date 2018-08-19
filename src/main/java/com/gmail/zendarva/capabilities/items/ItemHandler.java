@@ -1,11 +1,13 @@
 package com.gmail.zendarva.capabilities.items;
 
 import com.gmail.zendarva.capabilities.API.ICapability;
+import com.gmail.zendarva.capabilities.API.ICapabilityContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 
@@ -17,12 +19,14 @@ public class ItemHandler implements IItemHandler {
     protected final int size;
     protected final NonNullList<ItemStack> items;
     protected final boolean[] locked;
+    private final EnumFacing side;
     public BiPredicate<Integer, ItemStack> slotValidator = null;
 
-    public ItemHandler(int size){
+    public ItemHandler(int size, EnumFacing side){
         this.size = size;
         items = NonNullList.withSize(size,ItemStack.EMPTY);
         locked = new boolean[size];
+        this.side = side;
         for (int i = 0; i < size; i++) {
             locked[i]=false;
         }
@@ -36,6 +40,17 @@ public class ItemHandler implements IItemHandler {
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         ItemStackHelper.saveAllItems(tag,items);
+    }
+
+    @Override
+    public boolean matches(ICapabilityContext context) {
+        if (context instanceof ItemHandlerContext){
+            ItemHandlerContext ctx = (ItemHandlerContext) context;
+            if (ctx.side == side || ctx.side == null || side == null){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

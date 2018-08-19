@@ -19,8 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static net.minecraft.tileentity.TileEntityHopper.func_195484_a;
 
 @Mixin(TileEntityHopper.class)
-public abstract class HopperMixin extends TileEntityLockableLoot implements ICapabilityProvider {
-    VanillaInventoryWrapper wrapper = new VanillaInventoryWrapper((IInventory) (Object)this);
+public abstract class HopperMixin extends TileEntityLockableLoot {
+    //VanillaInventoryWrapper wrapper = new VanillaInventoryWrapper((IInventory) (Object)this);
 
     //Really?  That's stupid.
     protected HopperMixin(TileEntityType<?> p_i48284_1_) {
@@ -52,27 +52,10 @@ public abstract class HopperMixin extends TileEntityLockableLoot implements ICap
         if (state.getBlock().hasTileEntity()){
             TileEntity entity = world.getTileEntity(pos);
             if (entity instanceof ICapabilityProvider){
-                if(((ICapabilityProvider) entity).hasCapability(null, IItemHandler.class)){
-                    return (IInventory) ((ICapabilityProvider) entity).getCapability(direction, IItemHandler.class);
-                }
+                return (IInventory) ((ICapabilityProvider) entity).getCapability(null,IItemHandler.class).orElse(null);
             }
         }
         return null;
     }
 
-
-    @Override
-    public boolean hasCapability(EnumFacing direction, Class<? extends ICapability> capability) {
-        if (capability == IItemHandler.class)
-            return true;
-        return false;
-    }
-
-    @Override
-    public ICapability getCapability(EnumFacing direction, Class<? extends ICapability> capability) {
-        if (capability == IItemHandler.class){
-            return wrapper;
-        }
-        return null;
-    }
 }

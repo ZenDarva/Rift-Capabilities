@@ -7,8 +7,8 @@
   "refmap": "mixins.capabilities.refmap.json",
   "mixins": [
     "HopperMixin",
-    "ChestMixin",
-    "FurnaceMixin"
+    "IInventoryMixin",
+    "ISidedMixin"
   ],
   "client": [
 

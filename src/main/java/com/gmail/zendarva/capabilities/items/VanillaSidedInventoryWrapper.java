@@ -1,5 +1,6 @@
 package com.gmail.zendarva.capabilities.items;
 
+import com.gmail.zendarva.capabilities.API.ICapabilityContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -173,5 +174,13 @@ public class VanillaSidedInventoryWrapper implements ISidedInventory,IItemHandle
     @Override
     public void writeToNBT(NBTTagCompound tag) {
 
+    }
+
+    @Override
+    public boolean matches(ICapabilityContext context) {
+        if (context instanceof ItemHandlerContext){
+            return true;
+        }
+        return false;
     }
 }
