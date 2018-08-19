@@ -3,41 +3,39 @@ package com.gmail.zendarva.capabilities.items;
 import com.gmail.zendarva.capabilities.API.ICapability;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.BiPredicate;
 
 public class ItemHandler implements IItemHandler {
 
     protected final int size;
-    protected final ItemStack[] items;
+    protected final NonNullList<ItemStack> items;
     protected final boolean[] locked;
     public BiPredicate<Integer, ItemStack> slotValidator = null;
 
     public ItemHandler(int size){
         this.size = size;
-        items = new ItemStack[size];
+        items = NonNullList.withSize(size,ItemStack.EMPTY);
         locked = new boolean[size];
-
         for (int i = 0; i < size; i++) {
-            items[i] =ItemStack.EMPTY;
             locked[i]=false;
         }
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
-
+        ItemStackHelper.loadAllItems(tag,items);
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {
-
+        ItemStackHelper.saveAllItems(tag,items);
     }
 
     @Override
@@ -56,7 +54,7 @@ public class ItemHandler implements IItemHandler {
 
     @Override
     public ItemStack getStackInSlot(int slot) {
-        return items[slot];
+        return items.get(slot);
     }
 
     @Override
@@ -64,17 +62,16 @@ public class ItemHandler implements IItemHandler {
         if (locked[slot]){
             return ItemStack.EMPTY;
         }
-        if (items[slot].isEmpty())
+        if (items.get(slot).isEmpty())
             return ItemStack.EMPTY;
-        if (items[slot].getCount() <= amount){
-            ItemStack newStack = items[slot];
-            items[slot]= ItemStack.EMPTY;
+        if (items.get(slot).getCount() <= amount){
+            ItemStack newStack = items.get(slot);
+            items.set(slot,ItemStack.EMPTY);
             markDirty();
             return newStack;
         }
-        //Wrong.
-        ItemStack newStack = items[slot].copy();
-        items[slot].shrink(amount);
+        ItemStack newStack = items.get(slot).copy();
+        items.get(slot).shrink(amount);
         newStack.setCount(amount);
         return newStack;
     }
@@ -84,10 +81,10 @@ public class ItemHandler implements IItemHandler {
         if (locked[slot]){
             return ItemStack.EMPTY;
         }
-        if (items[slot].isEmpty())
+        if (items.get(slot).isEmpty())
             return ItemStack.EMPTY;
-        ItemStack newStack = items[slot];
-        items[slot]=ItemStack.EMPTY;
+        ItemStack newStack = items.get(slot);
+        items.set(slot,ItemStack.EMPTY);
         return newStack;
     }
 
@@ -95,7 +92,7 @@ public class ItemHandler implements IItemHandler {
     public void setInventorySlotContents(int slot, ItemStack itemStack) {
         if (locked[slot])
             return;
-        items[slot]=itemStack;
+        items.set(slot,itemStack);
     }
 
     @Override
@@ -149,7 +146,7 @@ public class ItemHandler implements IItemHandler {
     @Override
     public void clear() {
         for (int i = 0; i < size; i++) {
-            items[i]=ItemStack.EMPTY;
+            items.set(i,ItemStack.EMPTY);
             locked[i] = false;
         }
     }
@@ -184,4 +181,24 @@ public class ItemHandler implements IItemHandler {
     public boolean isSlotLocked(int slot) {
         return locked[slot];
     }
+
+    @Override
+    public ItemStack insertStack(ItemStack stack) {
+        for (ItemStack item : items) {
+            if (item.isStackable() &&
+                    item.isItemEqual(stack) &&
+                    item.getCount() < item.getMaxStackSize()){
+                int dif = item.getMaxStackSize() -item.getCount();
+                if (dif > stack.getCount())
+                    dif =stack.getCount();
+                stack.shrink(dif);
+                item.grow(dif);
+            }
+            if (stack.isEmpty())
+                break;
+        }
+        return stack;
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.gmail.zendarva.capabilities.items;
 
 import com.gmail.zendarva.capabilities.API.ICapability;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public interface IItemHandler extends ICapability, IInventory {
@@ -14,4 +15,8 @@ public interface IItemHandler extends ICapability, IInventory {
     public void lockSlot(int slot);
     public void unlockSlot(int slot);
     public boolean isSlotLocked(int slot);
+
+    //This will insert the provided itemstack into the inventory, wherever it will fit.
+    //Any leftovers will be returned.
+    public ItemStack insertStack(ItemStack stack);
 }

@@ -162,6 +162,12 @@ public class VanillaInventoryWrapper implements IItemHandler {
     }
 
     @Override
+    public ItemStack insertStack(ItemStack stack) {
+        //Needs to be implemented.
+        return null;
+    }
+
+    @Override
     public void readFromNBT(NBTTagCompound tag) {
 
     }
