@@ -13,20 +13,13 @@ public class VanillaInventoryWrapper implements IItemHandler {
 
     private final IInventory inventory;
     private final boolean[] locked;
-    public VanillaInventoryWrapper(IInventory inventory){
+
+    public VanillaInventoryWrapper(IInventory inventory) {
 
         this.inventory = inventory;
-        if (inventory instanceof TileEntityFurnace){ //cheap, temporary hack.
-            locked = new boolean[3];
-            for (int i = 0; i < locked.length; i++) {
-                locked[i]=false;
-            }
-        }
-        else {
-            locked = new boolean[inventory.getSizeInventory()];
-            for (int i = 0; i < locked.length; i++) {
-                locked[i] = false;
-            }
+        locked = new boolean[inventory.getSizeInventory()];
+        for (int i = 0; i < locked.length; i++) {
+            locked[i] = false;
         }
     }
 
@@ -42,7 +35,7 @@ public class VanillaInventoryWrapper implements IItemHandler {
 
     @Override
     public ItemStack getStackInSlot(int slot) {
-        if (locked[slot]){
+        if (locked[slot]) {
             return ItemStack.EMPTY;
         }
         return inventory.getStackInSlot(slot);
@@ -50,7 +43,7 @@ public class VanillaInventoryWrapper implements IItemHandler {
 
     @Override
     public ItemStack decrStackSize(int slot, int amount) {
-        if (locked[slot]){
+        if (locked[slot]) {
             return ItemStack.EMPTY;
         }
         return inventory.decrStackSize(slot, amount);
@@ -58,7 +51,7 @@ public class VanillaInventoryWrapper implements IItemHandler {
 
     @Override
     public ItemStack removeStackFromSlot(int slot) {
-        if (locked[slot]){
+        if (locked[slot]) {
             return ItemStack.EMPTY;
         }
         return inventory.removeStackFromSlot(slot);
@@ -66,7 +59,7 @@ public class VanillaInventoryWrapper implements IItemHandler {
 
     @Override
     public void setInventorySlotContents(int slot, ItemStack itemStack) {
-        if (locked[slot]){
+        if (locked[slot]) {
             return;
         }
         inventory.setInventorySlotContents(slot, itemStack);
@@ -155,12 +148,12 @@ public class VanillaInventoryWrapper implements IItemHandler {
 
     @Override
     public void lockSlot(int slot) {
-        locked[slot]=true;
+        locked[slot] = true;
     }
 
     @Override
     public void unlockSlot(int slot) {
-        locked[slot]=false;
+        locked[slot] = false;
     }
 
     @Override
