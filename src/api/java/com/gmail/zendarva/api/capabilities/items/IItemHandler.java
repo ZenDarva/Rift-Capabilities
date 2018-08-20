@@ -1,9 +1,8 @@
-package com.gmail.zendarva.capabilities.items;
+package com.gmail.zendarva.api.capabilities.items;
 
-import com.gmail.zendarva.capabilities.API.ICapability;
+import com.gmail.zendarva.api.capabilities.ICapability;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 public interface IItemHandler extends ICapability, IInventory {
 

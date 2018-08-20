@@ -1,15 +1,14 @@
 package com.gmail.zendarva.capabilities.test;
 
-import com.gmail.zendarva.capabilities.API.ICapability;
-import com.gmail.zendarva.capabilities.API.ICapabilityContext;
-import com.gmail.zendarva.capabilities.API.ICapabilityProvider;
+import com.gmail.zendarva.api.capabilities.ICapability;
+import com.gmail.zendarva.api.capabilities.ICapabilityContext;
+import com.gmail.zendarva.api.capabilities.ICapabilityProvider;
 import com.gmail.zendarva.capabilities.Capabilities;
-import com.gmail.zendarva.capabilities.items.IItemHandler;
+import com.gmail.zendarva.api.capabilities.items.IItemHandler;
 import com.gmail.zendarva.capabilities.items.ItemHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.EnumFacing;
 
 import java.util.Optional;
 

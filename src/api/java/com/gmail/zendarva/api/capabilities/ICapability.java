@@ -1,4 +1,4 @@
-package com.gmail.zendarva.capabilities.API;
+package com.gmail.zendarva.api.capabilities;
 
 import net.minecraft.nbt.NBTTagCompound;
 

@@ -1,6 +1,8 @@
 package com.gmail.zendarva.capabilities.items;
 
-import com.gmail.zendarva.capabilities.API.ICapabilityContext;
+import com.gmail.zendarva.api.capabilities.ICapabilityContext;
+import com.gmail.zendarva.api.capabilities.items.IItemHandler;
+import com.gmail.zendarva.api.capabilities.items.ItemHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -10,7 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 
 import javax.annotation.Nullable;
 
-public class VanillaSidedInventoryWrapper implements ISidedInventory,IItemHandler {
+public class VanillaSidedInventoryWrapper implements ISidedInventory, IItemHandler {
 
     private final ISidedInventory inventory;
 

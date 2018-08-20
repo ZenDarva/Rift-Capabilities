@@ -1,6 +1,4 @@
-package com.gmail.zendarva.capabilities.API;
-
-import net.minecraft.util.EnumFacing;
+package com.gmail.zendarva.api.capabilities;
 
 import java.util.Optional;
 

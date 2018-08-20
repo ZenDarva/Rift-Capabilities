@@ -3,14 +3,17 @@ buildscript {
         jcenter()
         maven { url 'https://www.dimdev.org/maven/' }
         maven { url = "http://files.minecraftforge.net/maven" }
+        maven { url 'http://repo.spongepowered.org/maven' }
     }
     dependencies {
         classpath 'org.dimdev:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle.tweaker-client'
 apply plugin: 'java'
+apply plugin: 'org.spongepowered.mixin'
 
 group 'com.gmail.zendarva'
 version '0.0.1'
@@ -35,4 +38,25 @@ minecraft {
     mappings = 'snapshot_20180817'
     runDir = 'run'
     tweakClass = 'org.dimdev.riftloader.launch.RiftLoaderClientTweaker'
+}
+mixin {
+    defaultObfuscationEnv notch
+    add sourceSets.main, 'mixins.aei.refmap.json'
+}
+task devJar(type: Jar, dependsOn: classes) {
+    classifier 'dev'
+    from sourceSets.main.output, sourceSets.api.output
+}
+
+task apiJar(type: Jar, dependsOn: classes) {
+    classifier 'api'
+    from sourceSets.api.output
+}
+jar {
+    from sourceSets.main.output, sourceSets.api.output
+}
+
+artifacts {
+    archives devJar
+    archives apiJar
 }

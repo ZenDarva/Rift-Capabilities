@@ -1,9 +1,7 @@
 package com.gmail.zendarva.capabilities.mixins;
 
-import com.gmail.zendarva.capabilities.API.ICapability;
-import com.gmail.zendarva.capabilities.API.ICapabilityProvider;
-import com.gmail.zendarva.capabilities.items.IItemHandler;
-import com.gmail.zendarva.capabilities.items.VanillaInventoryWrapper;
+import com.gmail.zendarva.api.capabilities.ICapabilityProvider;
+import com.gmail.zendarva.api.capabilities.items.IItemHandler;
 import net.minecraft.block.BlockHopper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.IInventory;

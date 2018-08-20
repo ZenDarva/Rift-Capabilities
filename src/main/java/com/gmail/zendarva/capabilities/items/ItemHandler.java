@@ -1,9 +1,9 @@
 package com.gmail.zendarva.capabilities.items;
 
-import com.gmail.zendarva.capabilities.API.ICapability;
-import com.gmail.zendarva.capabilities.API.ICapabilityContext;
+import com.gmail.zendarva.api.capabilities.ICapabilityContext;
+import com.gmail.zendarva.api.capabilities.items.IItemHandler;
+import com.gmail.zendarva.api.capabilities.items.ItemHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,7 +35,8 @@ public class ItemHandler implements IItemHandler {
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         ItemStackHelper.loadAllItems(tag,items);
-        this.size= tag.getInteger("inventorySize");
+        if (tag.hasKey("inventorySize"))
+            this.size= tag.getInteger("inventorySize");
         if (tag.hasKey("side"))
             this.side= EnumFacing.byIndex(tag.getInteger("side"));
 
@@ -53,7 +54,7 @@ public class ItemHandler implements IItemHandler {
     public boolean matches(ICapabilityContext context) {
         if (context instanceof ItemHandlerContext){
             ItemHandlerContext ctx = (ItemHandlerContext) context;
-            if (ctx.side == side || ctx.side == null || side == null){
+            if (ctx.side == side || ctx.side == null){
                 return true;
             }
         }
