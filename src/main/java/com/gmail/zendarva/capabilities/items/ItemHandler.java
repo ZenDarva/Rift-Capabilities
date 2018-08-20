@@ -16,10 +16,10 @@ import java.util.function.BiPredicate;
 
 public class ItemHandler implements IItemHandler {
 
-    protected final int size;
-    protected final NonNullList<ItemStack> items;
+    protected int size;
+    protected NonNullList<ItemStack> items;
     protected final boolean[] locked;
-    private final EnumFacing side;
+    private EnumFacing side;
     public BiPredicate<Integer, ItemStack> slotValidator = null;
 
     public ItemHandler(int size, EnumFacing side){
@@ -35,11 +35,18 @@ public class ItemHandler implements IItemHandler {
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         ItemStackHelper.loadAllItems(tag,items);
+        this.size= tag.getInteger("inventorySize");
+        if (tag.hasKey("side"))
+            this.side= EnumFacing.byIndex(tag.getInteger("side"));
+
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         ItemStackHelper.saveAllItems(tag,items);
+        tag.setInteger("inventorySize",size);
+        tag.setInteger("side",side.getIndex());
+
     }
 
     @Override

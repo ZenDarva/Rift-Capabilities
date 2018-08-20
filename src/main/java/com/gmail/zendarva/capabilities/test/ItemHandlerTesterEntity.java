@@ -6,6 +6,7 @@ import com.gmail.zendarva.capabilities.API.ICapabilityProvider;
 import com.gmail.zendarva.capabilities.Capabilities;
 import com.gmail.zendarva.capabilities.items.IItemHandler;
 import com.gmail.zendarva.capabilities.items.ItemHandler;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.EnumFacing;
@@ -19,6 +20,19 @@ public class ItemHandlerTesterEntity extends TileEntity implements ICapabilityPr
     }
     public ItemHandlerTesterEntity(){
         super(Capabilities.testEntity);
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+        super.writeToNBT(tag);
+        itemStore.writeToNBT(tag);
+        return tag;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag) {
+        super.readFromNBT(tag);
+        itemStore.readFromNBT(tag);
     }
 
     @Override
