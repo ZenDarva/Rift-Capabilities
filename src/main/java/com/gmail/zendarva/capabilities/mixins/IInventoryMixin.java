@@ -9,6 +9,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.*;
 import org.spongepowered.asm.mixin.Mixin;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Mixin({TileEntityChest.class, TileEntityDispenser.class, TileEntityDropper.class, TileEntityHopper.class, TileEntityShulkerBox.class,TileEntityJukebox.class, TileEntityTrappedChest.class})
@@ -25,6 +27,12 @@ public class IInventoryMixin implements ICapabilityProvider {
             return Optional.of(wrapper);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Optional<? extends ICapability>> getCapabilities(ICapabilityContext context, Class<? extends ICapability> capability) {
+        //Vanilla TE's aren't going to have more than one capability, by default anyway.
+        return new ArrayList<>(getCapabilities(context,capability));
     }
 
 }
