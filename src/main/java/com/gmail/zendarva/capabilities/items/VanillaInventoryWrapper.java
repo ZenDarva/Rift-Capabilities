@@ -186,4 +186,9 @@ public class VanillaInventoryWrapper implements IItemHandler {
         }
         return false;
     }
+
+    @Override
+    public boolean isValid() {
+        return true;
+    }
 }

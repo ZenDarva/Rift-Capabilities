@@ -185,4 +185,9 @@ public class VanillaSidedInventoryWrapper implements ISidedInventory, IItemHandl
         }
         return false;
     }
+
+    @Override
+    public boolean isValid() {
+        return true;
+    }
 }

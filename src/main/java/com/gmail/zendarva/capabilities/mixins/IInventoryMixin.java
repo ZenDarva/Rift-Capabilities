@@ -19,7 +19,7 @@ public class IInventoryMixin implements ICapabilityProvider {
     VanillaInventoryWrapper wrapper = null;
 
     @Override
-    public Optional<? extends ICapability> getCapability(ICapabilityContext context, Class<? extends ICapability> capability) {
+    public Optional<? extends ICapability> queryCapability(ICapabilityContext context, Class<? extends ICapability> capability) {
         if (wrapper == null){
             wrapper = new VanillaInventoryWrapper((IInventory) (Object)this);
         }
@@ -28,9 +28,19 @@ public class IInventoryMixin implements ICapabilityProvider {
         }
         return Optional.empty();
     }
+    @Override
+    public ICapability getCapability(ICapabilityContext context, Class<? extends ICapability> capability) {
+        if (wrapper == null){
+            wrapper = new VanillaInventoryWrapper((IInventory) (Object)this);
+        }
+        if (capability == IItemHandler.class){
+            return wrapper;
+        }
+        return null;
+    }
 
     @Override
-    public List<Optional<? extends ICapability>> getCapabilities(ICapabilityContext context, Class<? extends ICapability> capability) {
+    public List<ICapability> getCapabilities(ICapabilityContext context, Class<? extends ICapability> capability) {
         //Vanilla TE's aren't going to have more than one capability, by default anyway.
         return new ArrayList<>(getCapabilities(context,capability));
     }

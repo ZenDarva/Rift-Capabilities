@@ -50,7 +50,7 @@ public abstract class HopperMixin extends TileEntityLockableLoot {
         if (state.getBlock().hasTileEntity()){
             TileEntity entity = world.getTileEntity(pos);
             if (entity instanceof ICapabilityProvider){
-                return (IInventory) ((ICapabilityProvider) entity).getCapability(null,IItemHandler.class).orElse(null);
+                return (IInventory) ((ICapabilityProvider) entity).getCapability(null,IItemHandler.class);
             }
         }
         return null;

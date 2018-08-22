@@ -21,6 +21,7 @@ public class ItemHandler implements IItemHandler {
     protected final boolean[] locked;
     private EnumFacing side;
     public BiPredicate<Integer, ItemStack> slotValidator = null;
+    private boolean isValid;
 
     public ItemHandler(int size, EnumFacing side){
         this.size = size;
@@ -59,6 +60,15 @@ public class ItemHandler implements IItemHandler {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean isValid() {
+        return this.isValid;
+    }
+
+    public void setValid(boolean value){
+        this.isValid=value;
     }
 
     @Override

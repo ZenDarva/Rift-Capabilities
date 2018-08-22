@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ItemHandlerTesterEntity extends TileEntity implements ICapabilityProvider {
@@ -35,10 +36,22 @@ public class ItemHandlerTesterEntity extends TileEntity implements ICapabilityPr
     }
 
     @Override
-    public Optional<? extends ICapability> getCapability(ICapabilityContext context, Class<? extends ICapability> capability) {
+    public Optional<? extends ICapability> queryCapability(ICapabilityContext context, Class<? extends ICapability> capability) {
         if (capability == IItemHandler.class){
             return Optional.of(itemStore);
         }
         return Optional.empty();
+    }
+    @Override
+    public ICapability getCapability(ICapabilityContext context, Class<? extends ICapability> capability) {
+        if (capability == IItemHandler.class){
+            return itemStore;
+        }
+        return null;
+    }
+
+    @Override
+    public List<? extends ICapability> getCapabilities(ICapabilityContext context, Class<? extends ICapability> capability) {
+        return null;
     }
 }

@@ -9,4 +9,5 @@ public interface ICapability {
     public void readFromNBT(NBTTagCompound tag);
     public void writeToNBT(NBTTagCompound tag);
     public boolean matches(ICapabilityContext context);
+    public boolean isValid();
 }
