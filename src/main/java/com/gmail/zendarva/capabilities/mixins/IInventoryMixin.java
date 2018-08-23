@@ -10,6 +10,7 @@ import net.minecraft.tileentity.*;
 import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,12 +18,22 @@ import java.util.Optional;
 public class IInventoryMixin implements ICapabilityProvider {
 
     VanillaInventoryWrapper wrapper = null;
+    private List<ICapability> proxiedCapabilities = new LinkedList<>();
 
-    @Override
-    public Optional<? extends ICapability> queryCapability(ICapabilityContext context, Class<? extends ICapability> capability) {
+
+
+    private void initWrapper(){
         if (wrapper == null){
             wrapper = new VanillaInventoryWrapper((IInventory) (Object)this);
         }
+    }
+
+    @Override
+    public Optional<? extends ICapability> queryCapability(ICapabilityContext context, Class<? extends ICapability> capability) {
+        initWrapper();
+        Optional<ICapability> proxiedCap = proxiedCapabilities.stream().filter(f->f.matches(context)).findFirst();
+        if (proxiedCap.isPresent())
+            return proxiedCap;
         if (capability == IItemHandler.class){
             return Optional.of(wrapper);
         }
@@ -30,9 +41,10 @@ public class IInventoryMixin implements ICapabilityProvider {
     }
     @Override
     public ICapability getCapability(ICapabilityContext context, Class<? extends ICapability> capability) {
-        if (wrapper == null){
-            wrapper = new VanillaInventoryWrapper((IInventory) (Object)this);
-        }
+        initWrapper();
+        Optional<ICapability> proxiedCap = proxiedCapabilities.stream().filter(f->f.matches(context)).findFirst();
+        if (proxiedCap.isPresent())
+            return proxiedCap.get();
         if (capability == IItemHandler.class){
             return wrapper;
         }
@@ -40,9 +52,27 @@ public class IInventoryMixin implements ICapabilityProvider {
     }
 
     @Override
-    public List<ICapability> getCapabilities(ICapabilityContext context, Class<? extends ICapability> capability) {
-        //Vanilla TE's aren't going to have more than one capability, by default anyway.
-        return new ArrayList<>(getCapabilities(context,capability));
+    public List<? extends ICapability> getCapabilities(ICapabilityContext context, Class<? extends ICapability> capability) {
+        initWrapper();
+        List<ICapability> result = new LinkedList<>();
+        proxiedCapabilities.stream().filter(f->f.matches(context)).forEach(f->result.add(f));
+        if (capability == IItemHandler.class){
+            result.add(wrapper);
+        }
+        return result;
     }
 
+    @Override
+    public void addProxyCapability(ICapability capability) {
+        if (!proxiedCapabilities.contains(capability)){
+            proxiedCapabilities.add(capability);
+        }
+    }
+
+    @Override
+    public void removeProxyCapability(ICapability capability) {
+        if (proxiedCapabilities.contains(capability)){
+            proxiedCapabilities.remove(capability);
+        }
+    }
 }

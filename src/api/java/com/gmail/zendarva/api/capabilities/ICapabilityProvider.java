@@ -16,4 +16,7 @@ public interface ICapabilityProvider {
     public ICapability getCapability(ICapabilityContext context, Class<? extends ICapability> capability);
     @Nonnull
     public List<? extends ICapability> getCapabilities(ICapabilityContext context, Class<? extends ICapability> capability);
+
+    public void addProxyCapability(ICapability capability);
+    public void removeProxyCapability(ICapability capability);
 }

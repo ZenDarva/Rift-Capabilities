@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ public class ItemHandlerTesterEntity extends TileEntity implements ICapabilityPr
     public ItemHandlerTesterEntity(){
         super(Capabilities.testEntity);
     }
+    private List<ICapability> proxiedCapabilities = new LinkedList<>();
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
@@ -37,6 +39,9 @@ public class ItemHandlerTesterEntity extends TileEntity implements ICapabilityPr
 
     @Override
     public Optional<? extends ICapability> queryCapability(ICapabilityContext context, Class<? extends ICapability> capability) {
+        Optional<ICapability> proxiedCap = proxiedCapabilities.stream().filter(f->f.matches(context)).findFirst();
+        if (proxiedCap.isPresent())
+            return proxiedCap;
         if (capability == IItemHandler.class){
             return Optional.of(itemStore);
         }
@@ -44,6 +49,9 @@ public class ItemHandlerTesterEntity extends TileEntity implements ICapabilityPr
     }
     @Override
     public ICapability getCapability(ICapabilityContext context, Class<? extends ICapability> capability) {
+        Optional<ICapability> proxiedCap = proxiedCapabilities.stream().filter(f->f.matches(context)).findFirst();
+        if (proxiedCap.isPresent())
+            return proxiedCap.get();
         if (capability == IItemHandler.class){
             return itemStore;
         }
@@ -52,6 +60,25 @@ public class ItemHandlerTesterEntity extends TileEntity implements ICapabilityPr
 
     @Override
     public List<? extends ICapability> getCapabilities(ICapabilityContext context, Class<? extends ICapability> capability) {
-        return null;
+        List<ICapability> result = new LinkedList<>();
+        proxiedCapabilities.stream().filter(f->f.matches(context)).forEach(f->result.add(f));
+        if (capability == IItemHandler.class){
+            result.add(itemStore);
+        }
+        return result;
+    }
+
+    @Override
+    public void addProxyCapability(ICapability capability) {
+        if (!proxiedCapabilities.contains(capability)){
+            proxiedCapabilities.add(capability);
+        }
+    }
+
+    @Override
+    public void removeProxyCapability(ICapability capability) {
+        if (proxiedCapabilities.contains(capability)){
+            proxiedCapabilities.remove(capability);
+        }
     }
 }
