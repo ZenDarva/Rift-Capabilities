@@ -162,11 +162,6 @@ public class VanillaSidedInventoryWrapper implements ISidedInventory, IItemHandl
         return false;
     }
 
-    @Override
-    public ItemStack insertStack(ItemStack stack) {
-        //Needs to be implemented. May be problematic.
-        return null;
-    }
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {

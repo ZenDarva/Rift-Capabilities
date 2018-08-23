@@ -215,23 +215,6 @@ public class ItemHandler implements IItemHandler {
         return locked[slot];
     }
 
-    @Override
-    public ItemStack insertStack(ItemStack stack) {
-        for (ItemStack item : items) {
-            if (item.isStackable() &&
-                    item.isItemEqual(stack) &&
-                    item.getCount() < item.getMaxStackSize()){
-                int dif = item.getMaxStackSize() -item.getCount();
-                if (dif > stack.getCount())
-                    dif =stack.getCount();
-                stack.shrink(dif);
-                item.grow(dif);
-            }
-            if (stack.isEmpty())
-                break;
-        }
-        return stack;
-    }
 
 
 }

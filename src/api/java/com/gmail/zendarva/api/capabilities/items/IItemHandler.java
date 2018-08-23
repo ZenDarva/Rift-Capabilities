@@ -15,7 +15,4 @@ public interface IItemHandler extends ICapability, IInventory {
     public void unlockSlot(int slot);
     public boolean isSlotLocked(int slot);
 
-    //This will insert the provided itemstack into the inventory, wherever it will fit.
-    //Any leftovers will be returned.
-    public ItemStack insertStack(ItemStack stack);
 }
