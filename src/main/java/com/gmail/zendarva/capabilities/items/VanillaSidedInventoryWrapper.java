@@ -170,8 +170,8 @@ public class VanillaSidedInventoryWrapper implements ISidedInventory, IItemHandl
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
-
+    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+        return tag;
     }
 
     @Override

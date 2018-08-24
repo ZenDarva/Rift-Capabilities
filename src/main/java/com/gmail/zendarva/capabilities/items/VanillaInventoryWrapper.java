@@ -171,8 +171,8 @@ public class VanillaInventoryWrapper implements IItemHandler {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
-
+    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+        return tag;
     }
 
     @Override

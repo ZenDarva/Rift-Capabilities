@@ -45,12 +45,12 @@ public class ItemHandler implements IItemHandler {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         ItemStackHelper.saveAllItems(tag,items);
         tag.setInteger("inventorySize",size);
         if (side != null)
             tag.setInteger("side",side.getIndex());
-
+        return tag;
     }
 
     @Override
