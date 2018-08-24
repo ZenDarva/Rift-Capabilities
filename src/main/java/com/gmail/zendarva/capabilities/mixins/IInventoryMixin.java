@@ -22,6 +22,7 @@ public class IInventoryMixin implements ICapabilityProvider {
 
 
 
+
     private void initWrapper(){
         if (wrapper == null){
             wrapper = new VanillaInventoryWrapper((IInventory) (Object)this);
@@ -78,6 +79,7 @@ public class IInventoryMixin implements ICapabilityProvider {
 
     @Override
     public void invalidateCapabilities() {
-
+        if (wrapper!=null)
+            wrapper.invalidate();
     }
 }

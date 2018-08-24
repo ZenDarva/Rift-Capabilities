@@ -164,17 +164,6 @@ public class VanillaInventoryWrapper implements IItemHandler {
         return locked[slot];
     }
 
-
-    @Override
-    public void readFromNBT(NBTTagCompound tag) {
-
-    }
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-        return tag;
-    }
-
     @Override
     public boolean matches(ICapabilityContext context) {
         if (context instanceof ItemHandlerContext){

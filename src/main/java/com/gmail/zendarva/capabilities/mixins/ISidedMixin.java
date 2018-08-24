@@ -81,6 +81,7 @@ public class ISidedMixin implements ICapabilityProvider {
 
     @Override
     public void invalidateCapabilities() {
-        wrapper.invalidate();
+        if (wrapper!=null)
+            wrapper.invalidate();
     }
 }

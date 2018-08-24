@@ -165,16 +165,6 @@ public class VanillaSidedInventoryWrapper implements ISidedInventory, IItemHandl
 
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
-
-    }
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-        return tag;
-    }
-
-    @Override
     public boolean matches(ICapabilityContext context) {
         if (context instanceof ItemHandlerContext){
             return true;

@@ -1,6 +1,7 @@
 package com.gmail.zendarva.capabilities.items;
 
 import com.gmail.zendarva.api.capabilities.ICapabilityContext;
+import com.gmail.zendarva.api.capabilities.INBTSerializable;
 import com.gmail.zendarva.api.capabilities.items.IItemHandler;
 import com.gmail.zendarva.api.capabilities.items.ItemHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +15,7 @@ import net.minecraft.util.text.ITextComponent;
 import javax.annotation.Nullable;
 import java.util.function.BiPredicate;
 
-public class ItemHandler implements IItemHandler {
+public class ItemHandler implements IItemHandler, INBTSerializable<NBTTagCompound> {
 
     protected int size;
     protected NonNullList<ItemStack> items;
