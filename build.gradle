@@ -14,6 +14,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.tweaker-client'
 apply plugin: 'java'
 apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'maven'
 
 group 'com.gmail.zendarva'
 version '0.0.1'
@@ -59,4 +60,26 @@ jar {
 artifacts {
     archives devJar
     archives apiJar
+}
+
+uploadArchives {
+    repositories{
+        mavenDeployer{
+
+            repository(url: "http://theasylum.xyz:8080/archiva/repository/mcstuff"){
+                authentication(userName: project.properties.mavenUser, password: project.properties.mavenPassword)
+            }
+            snapshotRepository(url: "http://theasylum.xyz:8080/archiva/repository/mcstuff-snapshot"){
+                authentication(userName: project.properties.mavenUser, password: project.properties.mavenPassword)
+            }
+        }
+
+    }
+}
+print(project.properties.mavenUser)
+
+task snapshot{
+    if (project.hasProperty("version")){
+        project.setVersion(project.getProperties().get("version")+"-SNAPSHOT")
+    }
 }

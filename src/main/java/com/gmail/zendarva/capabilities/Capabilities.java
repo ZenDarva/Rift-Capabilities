@@ -12,17 +12,17 @@ import org.dimdev.rift.listener.ItemAdder;
 import org.dimdev.rift.listener.TileEntityTypeAdder;
 
 public class Capabilities implements BlockAdder, TileEntityTypeAdder, ItemAdder {
-    public static Block testBlock;
-    public static TileEntityType<ItemHandlerTesterEntity> testEntity;
+//    public static Block testBlock;
+//    public static TileEntityType<ItemHandlerTesterEntity> testEntity;
     @Override
     public void registerBlocks() {
-        testBlock = new ItemHandlerTesterBlock(Block.Builder.create(Material.WOOD));
-        Block.register("capabilities:testblock",testBlock);
+        //testBlock = new ItemHandlerTesterBlock(Block.Builder.create(Material.WOOD));
+        //Block.register("capabilities:testblock",testBlock);
     }
 
     @Override
     public void registerTileEntityTypes() {
-        testEntity = TileEntityType.registerTileEntityType("capabilities:test", TileEntityType.Builder.create(ItemHandlerTesterEntity::new));
+        //testEntity = TileEntityType.registerTileEntityType("capabilities:test", TileEntityType.Builder.create(ItemHandlerTesterEntity::new));
     }
 
     @Override
