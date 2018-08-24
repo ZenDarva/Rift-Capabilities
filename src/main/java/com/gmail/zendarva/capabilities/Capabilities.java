@@ -1,12 +1,7 @@
 package com.gmail.zendarva.capabilities;
 
-import com.gmail.zendarva.capabilities.test.ItemHandlerTesterBlock;
-import com.gmail.zendarva.capabilities.test.ItemHandlerTesterEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.tileentity.TileEntityType;
 import org.dimdev.rift.listener.BlockAdder;
 import org.dimdev.rift.listener.ItemAdder;
 import org.dimdev.rift.listener.TileEntityTypeAdder;
@@ -26,7 +21,8 @@ public class Capabilities implements BlockAdder, TileEntityTypeAdder, ItemAdder 
     }
 
     @Override
-    public void registerItems() {
-        Item.registerItemBlock(testBlock, ItemGroup.TRANSPORTATION);
+    public void registerItems()
+    {
+    //    Item.registerItemBlock(testBlock, ItemGroup.TRANSPORTATION);
     }
 }
