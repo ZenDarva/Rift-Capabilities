@@ -17,6 +17,13 @@ public interface ICapabilityProvider {
     @Nonnull
     public List<? extends ICapability> getCapabilities(ICapabilityContext context, Class<? extends ICapability> capability);
 
+    //Add a proxy that would like to override this blocks capabilities.  Could be used for multiparts, walls to block
+    //transfers, capability extenders (If you're creative...)
     public void addProxyCapability(ICapability capability);
+    //Unregister a capability override.
     public void removeProxyCapability(ICapability capability);
+
+    //This is called while your tileEntity is being removed.  Use it to mark the Capabilities your TileEntity provides
+    //as invalid.
+    public void invalidateCapabilities();
 }

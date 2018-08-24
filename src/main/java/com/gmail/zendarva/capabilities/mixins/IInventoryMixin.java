@@ -75,4 +75,9 @@ public class IInventoryMixin implements ICapabilityProvider {
             proxiedCapabilities.remove(capability);
         }
     }
+
+    @Override
+    public void invalidateCapabilities() {
+
+    }
 }

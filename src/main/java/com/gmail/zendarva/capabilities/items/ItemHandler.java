@@ -31,6 +31,7 @@ public class ItemHandler implements IItemHandler {
         for (int i = 0; i < size; i++) {
             locked[i]=false;
         }
+        isValid = true;
     }
 
     @Override
@@ -47,7 +48,8 @@ public class ItemHandler implements IItemHandler {
     public void writeToNBT(NBTTagCompound tag) {
         ItemStackHelper.saveAllItems(tag,items);
         tag.setInteger("inventorySize",size);
-        tag.setInteger("side",side.getIndex());
+        if (side != null)
+            tag.setInteger("side",side.getIndex());
 
     }
 
@@ -65,6 +67,11 @@ public class ItemHandler implements IItemHandler {
     @Override
     public boolean isValid() {
         return this.isValid;
+    }
+
+    @Override
+    public void invalidate() {
+        isValid=false;
     }
 
     public void setValid(boolean value){

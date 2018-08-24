@@ -15,6 +15,7 @@ public class VanillaInventoryWrapper implements IItemHandler {
 
     private final IInventory inventory;
     private final boolean[] locked;
+    private boolean isValid = true;
 
     public VanillaInventoryWrapper(IInventory inventory) {
 
@@ -162,7 +163,7 @@ public class VanillaInventoryWrapper implements IItemHandler {
     public boolean isSlotLocked(int slot) {
         return locked[slot];
     }
-    
+
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
@@ -184,6 +185,11 @@ public class VanillaInventoryWrapper implements IItemHandler {
 
     @Override
     public boolean isValid() {
-        return true;
+        return isValid;
+    }
+
+    @Override
+    public void invalidate() {
+        isValid =false;
     }
 }

@@ -81,4 +81,9 @@ public class ItemHandlerTesterEntity extends TileEntity implements ICapabilityPr
             proxiedCapabilities.remove(capability);
         }
     }
+
+    @Override
+    public void invalidateCapabilities() {
+        itemStore.invalidate();
+    }
 }

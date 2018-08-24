@@ -15,6 +15,7 @@ import javax.annotation.Nullable;
 public class VanillaSidedInventoryWrapper implements ISidedInventory, IItemHandler {
 
     private final ISidedInventory inventory;
+    private boolean isValid = true;
 
     @Override
     public int[] getSlotsForFace(EnumFacing enumFacing) {
@@ -183,6 +184,11 @@ public class VanillaSidedInventoryWrapper implements ISidedInventory, IItemHandl
 
     @Override
     public boolean isValid() {
-        return true;
+        return isValid;
+    }
+
+    @Override
+    public void invalidate() {
+        isValid=false;
     }
 }

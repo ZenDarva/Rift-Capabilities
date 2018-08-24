@@ -78,4 +78,9 @@ public class ISidedMixin implements ICapabilityProvider {
             proxiedCapabilities.remove(capability);
         }
     }
+
+    @Override
+    public void invalidateCapabilities() {
+        wrapper.invalidate();
+    }
 }
