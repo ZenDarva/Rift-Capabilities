@@ -58,7 +58,7 @@ public class ItemHandler implements IItemHandler, INBTSerializable<NBTTagCompoun
     public boolean matches(ICapabilityContext context) {
         if (context instanceof ItemHandlerContext){
             ItemHandlerContext ctx = (ItemHandlerContext) context;
-            if (ctx.side == side || ctx.side == null){
+            if (ctx.side == side || side == null){
                 return true;
             }
         }

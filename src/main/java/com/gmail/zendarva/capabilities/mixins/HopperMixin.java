@@ -2,6 +2,7 @@ package com.gmail.zendarva.capabilities.mixins;
 
 import com.gmail.zendarva.api.capabilities.ICapabilityProvider;
 import com.gmail.zendarva.api.capabilities.items.IItemHandler;
+import com.gmail.zendarva.api.capabilities.items.ItemHandlerContext;
 import net.minecraft.block.BlockHopper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.IInventory;
@@ -49,8 +50,10 @@ public abstract class HopperMixin extends TileEntityLockableLoot {
         IBlockState state = world.getBlockState(pos);
         if (state.getBlock().hasTileEntity()){
             TileEntity entity = world.getTileEntity(pos);
+            ItemHandlerContext context = new ItemHandlerContext();
+            context.side= direction;
             if (entity instanceof ICapabilityProvider){
-                return (IInventory) ((ICapabilityProvider) entity).getCapability(null,IItemHandler.class);
+                return (IInventory) ((ICapabilityProvider) entity).getCapability(context,IItemHandler.class);
             }
         }
         return null;
